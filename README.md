@@ -62,3 +62,5 @@ If you want an accordion style (that is, only a single section is opened at a ti
 `!>[name] My section`.
 All sections declared with the same name will fold/unfold so only one is visible at a time.
 
+
+Example usage in Grav [here](https://blog.cyril.by/en/documentation/emqtt5-doc/emqtt5)

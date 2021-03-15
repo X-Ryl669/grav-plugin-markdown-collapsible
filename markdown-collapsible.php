@@ -26,13 +26,26 @@ class MarkdownCollapsiblePlugin extends Plugin
 
         $markdown->addBlockType('!', 'Collapsible', false, false);
 
+    public function onMarkdownInitialized(Event $event)
+    {
+        $markdown = $event['markdown'];
+
+        $markdown->addBlockType('!', 'Collapsible', false, false);
+
         $markdown->blockCollapsible = function($Line) {
             if (preg_match('/^!>(\[(\w[\w-]*)\]?)\s*(.*)$/', $Line['text'], $matches))
             {
-		$name = $matches[2];
+                $name = $matches[2];
                 $text = $matches[3];
+            } else if (preg_match('/^!>\s*(.*)$/', $Line['text'], $matches))
+            {
+                $name = NULL;
+                $text = $matches[1];
+            }
+            if (isset($text))
+            {
                 $id = Grav::instance()['inflector']->hyphenize($text);
-		$attrs = $name ? array('name'=>$name, 'id'=>$id) : array('id'=>$id);
+                $attrs = $name ? array('name'=>$name, 'id'=>$id) : array('id'=>$id);
 
                 $Block = array(
                     'name' => 'input',
@@ -40,6 +53,7 @@ class MarkdownCollapsiblePlugin extends Plugin
                 );
                 return $Block;
             }
+
             if (preg_match('/^!@(.*)$/', $Line['text'], $matches))
             {
                 $Block = array('name' => 'div', 'markup' => '</div>');

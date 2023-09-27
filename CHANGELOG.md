@@ -1,3 +1,10 @@
+# v1.0.2
+## 03/09/2018
+
+1. [](#bugfix)
+    * Should fix #4 (unnamed collapsible).
+
+
 # v1.0.1
 ## 03/09/2018
 

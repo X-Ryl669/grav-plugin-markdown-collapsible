@@ -1,5 +1,5 @@
 # v1.0.2
-## 03/09/2018
+## 27/09/2023
 
 1. [](#bugfix)
     * Should fix #4 (unnamed collapsible).

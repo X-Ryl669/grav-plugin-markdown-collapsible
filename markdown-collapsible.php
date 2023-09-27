@@ -27,7 +27,7 @@ class MarkdownCollapsiblePlugin extends Plugin
         $markdown->addBlockType('!', 'Collapsible', false, false);
 
         $markdown->blockCollapsible = function($Line) {
-            if (preg_match('/^!>(\[(\w[\w-]*)\]?)\s*(.*)$/', $Line['text'], $matches))
+            if (preg_match('/^!>(\[(\w[\w-]*)\])?\s*(.*)$/', $Line['text'], $matches))
             {
                 $name = $matches[2];
                 $text = $matches[3];

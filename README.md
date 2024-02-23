@@ -24,6 +24,11 @@ Simply copy the `user/plugins/markdown-collapsible/markdown-collapsible.yaml` in
 enabled: true
 built_in_css: true
 ```
+## Offsetting the smooth scroll behaviour
+In situations where a top offset is desired for the scroll-to behaviour when a section is revealed, custom CSS can be used to do so. This is especially useful when your theme has a sticky header or navigation that obscures the top of the expanded content when opened.
+The relatively new `scroll-margin` CSS property provides the mechanism as described in [this Stackoverflow](https://stackoverflow.com/questions/24665602/scrollintoview-scrolls-just-too-far/56391657#answer-67923821) response.
+
+An plugin configuration option to specify this value may be added in a future release.
 
 # Examples
 

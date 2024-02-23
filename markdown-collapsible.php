@@ -24,9 +24,16 @@ class MarkdownCollapsiblePlugin extends Plugin
     {
         $markdown = $event['markdown'];
 
+        
+
         $markdown->addBlockType('!', 'Collapsible', false, false);
 
         $markdown->blockCollapsible = function($Line) {
+            $do_autoscroll = $this->config->get('plugins.markdown-collapsible.do_autoscroll');
+            if($do_autoscroll){
+                $offset = $this->config->get('plugins.markdown-collapsible.scroll_offset');  
+            }
+
             if (preg_match('/^!>(\[(\w[\w-]*)\])?\s*(.*)$/', $Line['text'], $matches))
             {
                 $name = $matches[2];
@@ -43,7 +50,7 @@ class MarkdownCollapsiblePlugin extends Plugin
 
                 $Block = array(
                     'name' => 'input',
-                    'markup' => '<input class="collapsible" id="'.$id.'" '.($name ? ' type="radio" name="'.$name.'"' : ' type="checkbox"').'><label class="collapsible" for="'.$id.'">'.$text.'</label><div class="collapsible">',
+                    'markup' => '<input class="collapsible" id="'.$id.'" '.($name ? ' type="radio" name="'.$name.'"' : ' type="checkbox"').'><label class="collapsible'.(!$do_autoscroll ? ' no-scroll' : '').'" for="'.$id.'"'. ($do_autoscroll ? 'style="scroll-margin:'.$offset.'px"' : '') .'>'.$text.'</label><div class="collapsible">',
                 );
                 return $Block;
             }

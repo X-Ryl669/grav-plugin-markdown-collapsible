@@ -23,7 +23,14 @@ Simply copy the `user/plugins/markdown-collapsible/markdown-collapsible.yaml` in
 ```
 enabled: true
 built_in_css: true
+do_autoscroll: true
+scroll_offset: 0
 ```
+
+## Automatic scroll-to-content
+The default behaviour is to smooth-scroll the viewport to the top of the new content when a collapsible section is opened. To disable this, set the `do_autoscroll` configuration item to `false`.
+
+An optional viewport-top offset (in pixels) can be specified to support themes with a sticky header or other visual effects.
 
 # Examples
 
@@ -60,7 +67,7 @@ You will output the following HTML:
 
 If you want an accordion style (that is, only a single section is opened at a time), you'll use the special syntax:
 `!>[name] My section`.
-All sections declared with the same name will fold/unfold so only one is visible at a time.
+All sections declared with the same name will fold/unfold so only one is visible at a time (i.e. an accordion).
 
 
 Example usage in Grav [here](https://blog.cyril.by/en/documentation/emqtt5-doc/emqtt5)

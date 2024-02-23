@@ -25,7 +25,7 @@ form:
 
     built_in_css:
       type: toggle
-      label: Use built in CSS
+      label: Use built-in CSS
       highlight: 1
       default: 1
       options:
@@ -34,4 +34,23 @@ form:
       validate:
         type: bool
 
+    do_autoscroll:
+      type: toggle
+      label: Scroll to content on expand
+      highlight: 1
+      default: 1
+      options:
+        1: Yes
+        0: No
+      validate:
+        type: bool
 
+    scroll_offset:
+      type: text
+      size: x-small
+      label: Viewport top offset on scroll
+      append: px
+      default: 0
+      validate:
+        type: int
+        min: 0

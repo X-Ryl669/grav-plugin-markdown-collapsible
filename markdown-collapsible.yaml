@@ -1,3 +1,5 @@
 enabled: true
 built_in_css: true
+do_autoscroll: true
+scroll_offset: 0
 level_classes: [collapsible]

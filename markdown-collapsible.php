@@ -16,7 +16,8 @@ class MarkdownCollapsiblePlugin extends Plugin
     {
         return [
             'onMarkdownInitialized' => ['onMarkdownInitialized', 0],
-            'onTwigSiteVariables'   => ['onTwigSiteVariables', 0]
+            'onTwigSiteVariables'   => ['onTwigSiteVariables', 0],
+            'onAssetsInitialized'   => ['onAssetsInitialized', 0]
         ];
     }
 
@@ -27,6 +28,12 @@ class MarkdownCollapsiblePlugin extends Plugin
         $markdown->addBlockType('!', 'Collapsible', false, false);
 
         $markdown->blockCollapsible = function($Line) {
+            $do_autoscroll = $this->config->get('plugins.markdown-collapsible.do_autoscroll');
+            if($do_autoscroll){
+                $offset = $this->config->get('plugins.markdown-collapsible.scroll_offset');  
+            }
+
+            
             if (preg_match('/^!>(\[(\w[\w-]*)\])?\s*(.*)$/', $Line['text'], $matches))
             {
                 $name = $matches[2];
@@ -43,7 +50,7 @@ class MarkdownCollapsiblePlugin extends Plugin
 
                 $Block = array(
                     'name' => 'input',
-                    'markup' => '<input class="collapsible" id="'.$id.'" '.($name ? ' type="radio" name="'.$name.'"' : ' type="checkbox"').'><label class="collapsible" for="'.$id.'">'.$text.'</label><div class="collapsible">',
+                    'markup' => '<input class="collapsible" id="'.$id.'" '.($name ? ' type="radio" name="'.$name.'"' : ' type="checkbox"').'><label class="collapsible'.(!$do_autoscroll ? ' no-scroll' : '').'" for="'.$id.'">'.$text.'</label><div class="collapsible">',
                 );
                 return $Block;
             }
@@ -67,12 +74,20 @@ class MarkdownCollapsiblePlugin extends Plugin
             }
         };
     }
+    
+    public function onAssetsInitialized()
+    {
+        $offset = $this->config->get('plugins.markdown-collapsible.scroll_offset');
+        if ($this->config->get('plugins.markdown-collapsible.do_autoscroll') && $offset > 0 )
+        {
+            $this->grav['assets']->addInlineCss('label.collapsible { scroll-margin: '.$offset.'px; }');
+        }
+    }
 
     public function onTwigSiteVariables()
     {
         if ($this->config->get('plugins.markdown-collapsible.built_in_css')) {
-            $this->grav['assets']
-                ->add('plugin://markdown-collapsible/assets/collapsible.css');
+            $this->grav['assets']->add('plugin://markdown-collapsible/assets/collapsible.css');
         }
         $this->grav['assets']->add('plugin://markdown-collapsible/js/collapsible.js');
     }
